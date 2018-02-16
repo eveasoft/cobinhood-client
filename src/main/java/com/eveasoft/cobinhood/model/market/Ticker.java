@@ -1,4 +1,4 @@
-package com.eveasoft.cobinhood.model;
+package com.eveasoft.cobinhood.model.market;
 
 import com.google.gson.annotations.SerializedName;
 

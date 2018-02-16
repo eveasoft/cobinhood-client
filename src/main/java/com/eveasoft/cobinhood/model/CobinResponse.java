@@ -10,7 +10,7 @@ public class CobinResponse<T> {
     @SerializedName("success")
     private boolean success;
 
-    @SerializedName("result")
+    @SerializedName(value="result", alternate="error")
     private CobinResult<T> result;
 
     public boolean getSuccess() {
