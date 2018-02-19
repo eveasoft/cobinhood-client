@@ -72,7 +72,7 @@ public class CobinhoodClient {
             if (resp.code() >= 100 && resp.code() <= 399 && resp.body().getSuccess()) {
                 return resp;
             } else if (resp.code() >= 400 && resp.code() <= 599) {
-                throw new CobinException(resp.message());
+                throw new CobinException(String.format("%d - %s", resp.code(), resp.message()));
             } else {
                 throw new CobinException("Unknown error.");
             }
@@ -105,7 +105,7 @@ public class CobinhoodClient {
         return tradingPairs;
     }
 
-    public OrderBook getOrderBook(final String tradingPairId) throws CobinException {
+    public synchronized OrderBook getOrderBook(final String tradingPairId) throws CobinException {
 
         final Call<CobinResponse<OrderBook>> call = marketAPI.getOrderBook(tradingPairId);
 

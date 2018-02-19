@@ -7,7 +7,9 @@ import com.google.gson.annotations.SerializedName;
  */
 public class CobinResult<T> {
 
-    @SerializedName(value="t", alternate={"currencies", "trading_pairs", "orderbook", "ticker", "orders", "order"})
+    @SerializedName(value="t", alternate={"currencies", "trading_pairs", "orderbook", "ticker", "trades", "orders",
+            "order", "order_history", "balances", "ledger", "deposit_addresses", "withdrawal_addresses", "withdrawal",
+            "withdrawals", "deposit", "deposits"})
     private T t;
 
     public T getT() {
