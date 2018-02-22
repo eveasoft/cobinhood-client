@@ -1,10 +1,12 @@
 package com.eveasoft.cobinhood;
 
+import com.eveasoft.cobinhood.api.CobinhoodChartAPI;
 import com.eveasoft.cobinhood.api.CobinhoodMarketAPI;
 import com.eveasoft.cobinhood.api.CobinhoodTradingAPI;
 import com.eveasoft.cobinhood.api.CobinhoodWalletAPI;
 import com.eveasoft.cobinhood.exception.CobinException;
 import com.eveasoft.cobinhood.model.*;
+import com.eveasoft.cobinhood.model.chart.Candle;
 import com.eveasoft.cobinhood.model.market.Currency;
 import com.eveasoft.cobinhood.model.market.OrderBook;
 import com.eveasoft.cobinhood.model.market.Ticker;
@@ -34,6 +36,7 @@ public class CobinhoodClient {
     private final Retrofit retrofit;
 
     private final CobinhoodMarketAPI marketAPI;
+    private final CobinhoodChartAPI chartAPI;
     private final CobinhoodTradingAPI tradingAPI;
     private final CobinhoodWalletAPI walletAPI;
 
@@ -60,6 +63,7 @@ public class CobinhoodClient {
                 .build();
 
         marketAPI = retrofit.create(CobinhoodMarketAPI.class);
+        chartAPI = retrofit.create(CobinhoodChartAPI.class);
         tradingAPI = retrofit.create(CobinhoodTradingAPI.class);
         walletAPI = retrofit.create(CobinhoodWalletAPI.class);
     }
@@ -137,6 +141,33 @@ public class CobinhoodClient {
 
         return recentTrades;
 
+    }
+
+    public synchronized float getSpread(final String tradingPairId) throws CobinException {
+
+        final OrderBook orderBook = getOrderBook(tradingPairId);
+
+        final float highestBid = Float.valueOf(orderBook.getBids().get(0).get(0));
+
+        final float lowestAsk = Float.valueOf(orderBook.getAsks().get(0).get(0));
+
+        final float spread = (lowestAsk > highestBid) ? lowestAsk - highestBid : 0f;
+
+        return spread;
+    }
+
+
+    // Chart API
+
+    public synchronized List<Candle> getCandles(final String tradingPairId) throws CobinException {
+
+        final Call<CobinResponse<List<Candle>>> call = chartAPI.getCandles(tradingPairId);
+
+        final Response<CobinResponse> resp = execute(call);
+
+        final List<Candle> candles = ((CobinResponse<List<Candle>>) resp.body()).getResult().getT();
+
+        return candles;
     }
 
 
