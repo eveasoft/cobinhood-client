@@ -1,13 +1,15 @@
 # Java client for Cobinhood REST API
 
-Covers all endpoints provided by the Cobinhood REST API: https://cobinhood.github.io/api-public/
+Covers all endpoints provided by the Cobinhood REST API v1: https://cobinhood.github.io/api-public/
 
 Designed to be as simple as possible.
 
 ### Dependencies
 This project uses the following libraries:
 - retrofit 2.3.0
+- okhttp 3.8.0
 - gson 2.7
+- junit 4.11
 
 ### Usage
 
@@ -25,7 +27,7 @@ public static void main(String[] args) throws CobinException {
     System.out.println(String.format("Last trade price of ETH-BTC pair: %s", ticker.getLastTradePrice()));
 }
 ```
-Note: API token (api.jwt) is only necessary when requesting the private API (trading, wallet)
+Note: API token (api.jwt) is only necessary when requesting the private API (trading and wallet related operations)
 
 ### Donation
 ```
