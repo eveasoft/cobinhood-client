@@ -11,13 +11,13 @@ public class Deposit {
     private String amount;
 
     @SerializedName("completed_at")
-    private Integer completedAt;
+    private long completedAt;
 
     @SerializedName("confirmations")
     private Integer confirmations;
 
     @SerializedName("created_at")
-    private Integer createdAt;
+    private long createdAt;
 
     @SerializedName("currency")
     private String currency;
@@ -51,11 +51,11 @@ public class Deposit {
         this.amount = amount;
     }
 
-    public Integer getCompletedAt() {
+    public long getCompletedAt() {
         return completedAt;
     }
 
-    public void setCompletedAt(Integer completedAt) {
+    public void setCompletedAt(long completedAt) {
         this.completedAt = completedAt;
     }
 
@@ -67,11 +67,11 @@ public class Deposit {
         this.confirmations = confirmations;
     }
 
-    public Integer getCreatedAt() {
+    public long getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Integer createdAt) {
+    public void setCreatedAt(long createdAt) {
         this.createdAt = createdAt;
     }
 

@@ -23,7 +23,7 @@ public class Address {
     private String address;
 
     @SerializedName("created_at")
-    private Integer createdAt;
+    private long createdAt;
 
     public String getId() {
         return id;
@@ -65,11 +65,11 @@ public class Address {
         this.address = address;
     }
 
-    public Integer getCreatedAt() {
+    public long getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Integer createdAt) {
+    public void setCreatedAt(long createdAt) {
         this.createdAt = createdAt;
     }
 }

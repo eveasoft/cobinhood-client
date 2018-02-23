@@ -422,6 +422,17 @@ public class CobinhoodClient {
         return deposit;
     }
 
+    public synchronized List<Deposit> getDeposits() throws CobinException {
+
+        final Call<CobinResponse<List<Deposit>>> call = walletAPI.getDeposits(apiJWT, null, null);
+
+        final Response<CobinResponse> resp = execute(call);
+
+        final List<Deposit> deposits = ((CobinResponse<List<Deposit>>) resp.body()).getResult().getT();
+
+        return deposits;
+    }
+
     public synchronized List<Deposit> getDeposits(final int page, final int limit) throws CobinException {
 
         final Call<CobinResponse<List<Deposit>>> call = walletAPI.getDeposits(apiJWT, page, limit);

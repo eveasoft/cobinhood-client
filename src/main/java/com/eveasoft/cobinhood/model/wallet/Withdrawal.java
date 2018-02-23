@@ -11,13 +11,13 @@ public class Withdrawal {
     private String amount;
 
     @SerializedName("completed_at")
-    private Integer completedAt;
+    private long completedAt;
 
     @SerializedName("confirmations")
     private Integer confirmations;
 
     @SerializedName("created_at")
-    private Integer createdAt;
+    private long createdAt;
 
     @SerializedName("currency")
     private String currency;
@@ -29,7 +29,7 @@ public class Withdrawal {
     private Integer requiredConfirmations;
 
     @SerializedName("sent_at")
-    private Integer sentAt;
+    private long sentAt;
 
     @SerializedName("status")
     private String status;
@@ -41,7 +41,7 @@ public class Withdrawal {
     private String txhash;
 
     @SerializedName("updated_at")
-    private Integer updatedAt;
+    private long updatedAt;
 
     @SerializedName("user_id")
     private String userId;
@@ -57,11 +57,11 @@ public class Withdrawal {
         this.amount = amount;
     }
 
-    public Integer getCompletedAt() {
+    public long getCompletedAt() {
         return completedAt;
     }
 
-    public void setCompletedAt(Integer completedAt) {
+    public void setCompletedAt(long completedAt) {
         this.completedAt = completedAt;
     }
 
@@ -73,11 +73,11 @@ public class Withdrawal {
         this.confirmations = confirmations;
     }
 
-    public Integer getCreatedAt() {
+    public long getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Integer createdAt) {
+    public void setCreatedAt(long createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -105,11 +105,11 @@ public class Withdrawal {
         this.requiredConfirmations = requiredConfirmations;
     }
 
-    public Integer getSentAt() {
+    public long getSentAt() {
         return sentAt;
     }
 
-    public void setSentAt(Integer sentAt) {
+    public void setSentAt(long sentAt) {
         this.sentAt = sentAt;
     }
 
@@ -137,11 +137,11 @@ public class Withdrawal {
         this.txhash = txhash;
     }
 
-    public Integer getUpdatedAt() {
+    public long getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(Integer updatedAt) {
+    public void setUpdatedAt(long updatedAt) {
         this.updatedAt = updatedAt;
     }
 
