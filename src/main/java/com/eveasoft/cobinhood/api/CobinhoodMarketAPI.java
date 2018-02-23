@@ -9,6 +9,7 @@ import com.eveasoft.cobinhood.model.trading.Trade;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 import java.util.List;
 
@@ -32,7 +33,7 @@ public interface CobinhoodMarketAPI {
     // Get order book for the trading pair containing all asks/bids:
 
     @GET("/v1/market/orderbooks/{trading_pair_id}")
-    Call<CobinResponse<OrderBook>> getOrderBook(@Path("trading_pair_id") String tradingPairId);
+    Call<CobinResponse<OrderBook>> getOrderBook(@Path("trading_pair_id") String tradingPairId, @Query("limit") Integer limit);
 
 
     // Returns ticker for specified trading pair:
@@ -44,6 +45,6 @@ public interface CobinhoodMarketAPI {
     // Returns most recent trades for the specified trading pair:
 
     @GET("/v1/market/trades/{trading_pair_id}")
-    Call<CobinResponse<List<Trade>>> getRecentTrades(@Path("trading_pair_id") String tradingPairId);
+    Call<CobinResponse<List<Trade>>> getRecentTrades(@Path("trading_pair_id") String tradingPairId, @Query("limit") Integer limit);
 
 }

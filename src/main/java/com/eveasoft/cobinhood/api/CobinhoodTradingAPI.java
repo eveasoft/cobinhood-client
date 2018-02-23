@@ -28,7 +28,8 @@ public interface CobinhoodTradingAPI {
     // List all current orders for user:
 
     @GET("/v1/trading/orders")
-    Call<CobinResponse<List<Order>>> getOrders(@Header("Authorization") String authorization);
+    Call<CobinResponse<List<Order>>> getOrders(@Header("Authorization") String authorization,
+                                               @Query("page") Integer page, @Query("limit") Integer limit);
 
 
     // Place orders to ask or bid:
@@ -52,7 +53,8 @@ public interface CobinhoodTradingAPI {
     // Returns order history for the current user:
 
     @GET("/v1/trading/order_history")
-    Call<CobinResponse<List<Order>>> getOrderHistory(@Header("Authorization") String authorization);
+    Call<CobinResponse<List<Order>>> getOrderHistory(@Header("Authorization") String authorization,
+                                                     @Query("page") Integer page, @Query("limit") Integer limit);
 
 
     // Get trade information:
@@ -64,6 +66,7 @@ public interface CobinhoodTradingAPI {
     // Returns trade history for the current user:
 
     @GET("/v1/trading/trades")
-    Call<CobinResponse<List<Trade>>> getTradeHistory(@Header("Authorization") String authorization);
+    Call<CobinResponse<List<Trade>>> getTradeHistory(@Header("Authorization") String authorization,
+                                                     @Query("page") Integer page, @Query("limit") Integer limit);
 
 }

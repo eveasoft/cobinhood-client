@@ -6,6 +6,7 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 import java.util.List;
 
@@ -23,7 +24,8 @@ public interface CobinhoodWalletAPI {
     // Get balance history for the current user:
 
     @GET("/v1/wallet/ledger")
-    Call<CobinResponse<List<Ledger>>> getLedgerEntries(@Header("Authorization") String authorization);
+    Call<CobinResponse<List<Ledger>>> getLedgerEntries(@Header("Authorization") String authorization,
+                                                       @Query("page") Integer page, @Query("limit") Integer limit);
 
 
     // Get wallet deposit addresses:
@@ -47,7 +49,8 @@ public interface CobinhoodWalletAPI {
     // Get all withdrawals:
 
     @GET("/v1/wallet/withdrawals")
-    Call<CobinResponse<List<Withdrawal>>> getWithdrawals(@Header("Authorization") String authorization);
+    Call<CobinResponse<List<Withdrawal>>> getWithdrawals(@Header("Authorization") String authorization,
+                                                         @Query("page") Integer page, @Query("limit") Integer limit);
 
 
     // Get deposit information:
@@ -60,5 +63,9 @@ public interface CobinhoodWalletAPI {
 
     @GET("/v1/wallet/deposits")
     Call<CobinResponse<List<Deposit>>> getDeposits(@Header("Authorization") String authorization);
+
+    @GET("/v1/wallet/deposits")
+    Call<CobinResponse<List<Deposit>>> getDeposits(@Header("Authorization") String authorization,
+                                                   @Query("page") Integer page, @Query("limit") Integer limit);
 
 }
