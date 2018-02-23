@@ -24,6 +24,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * Java client for Cobinhood REST API
+ *
  * Created by Guilhem on 13/02/2018.
  */
 public class CobinhoodClient {
@@ -87,6 +89,12 @@ public class CobinhoodClient {
 
     // Market API
 
+    /**
+     * Get all currencies.
+     *
+     * @return  list of currencies
+     * @throws CobinException
+     */
     public synchronized List<Currency> getAllCurrencies() throws CobinException {
 
         final Call<CobinResponse<List<Currency>>> call = marketAPI.getAllCurrencies();
@@ -98,6 +106,12 @@ public class CobinhoodClient {
         return currencies;
     }
 
+    /**
+     * Get all trading pairs.
+     *
+     * @return  list of trading pairs
+     * @throws CobinException
+     */
     public synchronized List<TradingPair> getAllTradingPairs() throws CobinException {
 
         final Call<CobinResponse<List<TradingPair>>> call = marketAPI.getAllTradingPairs();
@@ -109,6 +123,13 @@ public class CobinhoodClient {
         return tradingPairs;
     }
 
+    /**
+     * Get order book for the trading pair containing all asks/bids
+     *
+     * @param tradingPairId trading pair id
+     * @return              order book
+     * @throws CobinException
+     */
     public synchronized OrderBook getOrderBook(final String tradingPairId) throws CobinException {
 
         final Call<CobinResponse<OrderBook>> call = marketAPI.getOrderBook(tradingPairId, null);
@@ -120,6 +141,14 @@ public class CobinhoodClient {
         return orderBook;
     }
 
+    /**
+     * Get order book for the trading pair containing all asks/bids with limit.
+     *
+     * @param tradingPairId trading pair id
+     * @param limit         limit
+     * @return              order book
+     * @throws CobinException
+     */
     public synchronized OrderBook getOrderBook(final String tradingPairId, final int limit) throws CobinException {
 
         final Call<CobinResponse<OrderBook>> call = marketAPI.getOrderBook(tradingPairId, limit);
@@ -131,6 +160,13 @@ public class CobinhoodClient {
         return orderBook;
     }
 
+    /**
+     * Get ticker for specified trading pair.
+     *
+     * @param tradingPairId trading pair id
+     * @return              ticker
+     * @throws CobinException
+     */
     public synchronized Ticker getTicker(final String tradingPairId) throws CobinException {
 
         final Call<CobinResponse<Ticker>> call = marketAPI.getTicker(tradingPairId);
@@ -142,6 +178,13 @@ public class CobinhoodClient {
         return ticker;
     }
 
+    /**
+     * Get the most recent trades for the specified trading pair.
+     *
+     * @param tradingPairId trading pair id
+     * @return              list of trades
+     * @throws CobinException
+     */
     public synchronized List<Trade> getRecentTrades(final String tradingPairId) throws CobinException {
 
         final Call<CobinResponse<List<Trade>>> call = marketAPI.getRecentTrades(tradingPairId, null);
@@ -154,6 +197,14 @@ public class CobinhoodClient {
 
     }
 
+    /**
+     * Get the most recent trades for the specified trading pair with limit.
+     *
+     * @param tradingPairId trading pair id
+     * @param limit         limit
+     * @return              list of trades
+     * @throws CobinException
+     */
     public synchronized List<Trade> getRecentTrades(final String tradingPairId, final int limit) throws CobinException {
 
         final Call<CobinResponse<List<Trade>>> call = marketAPI.getRecentTrades(tradingPairId, limit);
@@ -166,6 +217,13 @@ public class CobinhoodClient {
 
     }
 
+    /**
+     * Gets spread for the specified trading pair.
+     *
+     * @param tradingPairId trading pair id
+     * @return              spread
+     * @throws CobinException
+     */
     public synchronized float getSpread(final String tradingPairId) throws CobinException {
 
         final OrderBook orderBook = getOrderBook(tradingPairId, 1);
@@ -182,6 +240,13 @@ public class CobinhoodClient {
 
     // Chart API
 
+    /**
+     * Get charting candles for the specified trading pair.
+     *
+     * @param tradingPairId trading pair id
+     * @return              list of candles
+     * @throws CobinException
+     */
     public synchronized List<Candle> getCandles(final String tradingPairId) throws CobinException {
 
         final Call<CobinResponse<List<Candle>>> call = chartAPI.getCandles(tradingPairId);
@@ -196,6 +261,13 @@ public class CobinhoodClient {
 
     // Trading API
 
+    /**
+     * Get information for a single order.
+     *
+     * @param orderId   order id
+     * @return          order
+     * @throws CobinException
+     */
     public synchronized Order getOrder(final String orderId) throws CobinException {
 
         final Call<CobinResponse<Order>> call = tradingAPI.getOrder(apiJWT, orderId);
@@ -207,6 +279,13 @@ public class CobinhoodClient {
         return order;
     }
 
+    /**
+     * Get all trades originating from the specific order.
+     *
+     * @param orderId   order id
+     * @return          list of trades
+     * @throws CobinException
+     */
     public synchronized List<Trade> getTrades(final String orderId) throws CobinException {
 
         final Call<CobinResponse<List<Trade>>> call = tradingAPI.getTrades(apiJWT, orderId);
@@ -218,6 +297,12 @@ public class CobinhoodClient {
         return trades;
     }
 
+    /**
+     * Get all current orders for user.
+     *
+     * @return  list of orders
+     * @throws CobinException
+     */
     public synchronized List<Order> getOrders() throws CobinException {
 
         final Call<CobinResponse<List<Order>>> call = tradingAPI.getOrders(apiJWT, null, null);
@@ -229,6 +314,14 @@ public class CobinhoodClient {
         return orders;
     }
 
+    /**
+     * Get all current orders for user with pagination.
+     *
+     * @param page      page
+     * @param limit     limit
+     * @return          list of orders
+     * @throws CobinException
+     */
     public synchronized List<Order> getOrders(final int page, final int limit) throws CobinException {
 
         final Call<CobinResponse<List<Order>>> call = tradingAPI.getOrders(apiJWT, page, limit);
@@ -240,6 +333,13 @@ public class CobinhoodClient {
         return orders;
     }
 
+    /**
+     * Place order to ask or bid.
+     *
+     * @param order     order
+     * @return          order id
+     * @throws CobinException
+     */
     public synchronized String placeOrder(final Order order) throws CobinException {
 
         final Call<CobinResponse<Order>> call = tradingAPI.placeOrder(apiJWT, System.currentTimeMillis(), order);
@@ -251,6 +351,13 @@ public class CobinhoodClient {
         return orderId;
     }
 
+    /**
+     * Modify a single order.
+     *
+     * @param order     order
+     * @param orderId   order id
+     * @throws CobinException
+     */
     public synchronized void modifyOrder(final Order order, final String orderId) throws CobinException {
 
         final Call<CobinResponse> call = tradingAPI.modifyOrder(apiJWT, System.currentTimeMillis(), order, orderId);
@@ -258,6 +365,12 @@ public class CobinhoodClient {
         execute(call);
     }
 
+    /**
+     * Cancel a single order.
+     *
+     * @param orderId   order id
+     * @throws CobinException
+     */
     public synchronized void cancelOrder(final String orderId) throws CobinException {
 
         final Call<CobinResponse> call = tradingAPI.cancelOrder(apiJWT, System.currentTimeMillis(), orderId);
@@ -265,6 +378,12 @@ public class CobinhoodClient {
         execute(call);
     }
 
+    /**
+     * Get order history for the current user.
+     *
+     * @return  list of orders
+     * @throws CobinException
+     */
     public synchronized List<Order> getOrderHistory() throws CobinException {
 
         final Call<CobinResponse<List<Order>>> call = tradingAPI.getOrderHistory(apiJWT, null, null);
@@ -276,6 +395,14 @@ public class CobinhoodClient {
         return orders;
     }
 
+    /**
+     * Get order history for the current user with pagination.
+     *
+     * @param page  page
+     * @param limit limit
+     * @return      list of orders
+     * @throws CobinException
+     */
     public synchronized List<Order> getOrderHistory(final int page, final int limit) throws CobinException {
 
         final Call<CobinResponse<List<Order>>> call = tradingAPI.getOrderHistory(apiJWT, page, limit);
@@ -287,6 +414,13 @@ public class CobinhoodClient {
         return orders;
     }
 
+    /**
+     * Get trade information. A user only can get their own trade.
+     *
+     * @param tradeId   trade id
+     * @return             list of trades
+     * @throws CobinException
+     */
     public synchronized Trade getTrade(final String tradeId) throws CobinException {
 
         final Call<CobinResponse<Trade>> call = tradingAPI.getTrade(apiJWT, tradeId);
@@ -298,6 +432,13 @@ public class CobinhoodClient {
         return trade;
     }
 
+    /**
+     * Get trade history for the current user.
+     *
+     * @param orderId   order id
+     * @return          list of trades
+     * @throws CobinException
+     */
     public synchronized List<Trade> getTradeHistory(final String orderId) throws CobinException {
 
         final Call<CobinResponse<List<Trade>>> call = tradingAPI.getTradeHistory(apiJWT, null, null);
@@ -309,6 +450,15 @@ public class CobinhoodClient {
         return trades;
     }
 
+    /**
+     * Get trade history for the current user with pagination.
+     *
+     * @param orderId   order id
+     * @param page      page
+     * @param limit     limit
+     * @return          list of trades
+     * @throws CobinException
+     */
     public synchronized List<Trade> getTradeHistory(final String orderId, final int page, final int limit) throws CobinException {
 
         final Call<CobinResponse<List<Trade>>> call = tradingAPI.getTradeHistory(apiJWT, page, limit);
@@ -323,6 +473,12 @@ public class CobinhoodClient {
 
     // Wallet API
 
+    /**
+     * Get balances of the current user.
+     *
+     * @return  list of balances
+     * @throws CobinException
+     */
     public synchronized List<Balance> getWalletBalances() throws CobinException {
 
         final Call<CobinResponse<List<Balance>>> call = walletAPI.getWalletBalances(apiJWT);
@@ -334,6 +490,12 @@ public class CobinhoodClient {
         return balances;
     }
 
+    /**
+     * Get balance history for the current user.
+     *
+     * @return  list of ledger entries
+     * @throws CobinException
+     */
     public synchronized List<Ledger> getLedgerEntries() throws CobinException {
 
         final Call<CobinResponse<List<Ledger>>> call = walletAPI.getLedgerEntries(apiJWT, null, null);
@@ -345,6 +507,14 @@ public class CobinhoodClient {
         return ledgers;
     }
 
+    /**
+     * Get balance history for the current user with pagination.
+     *
+     * @param page  page
+     * @param limit limit
+     * @return      list of ledger entries
+     * @throws CobinException
+     */
     public synchronized List<Ledger> getLedgerEntries(final int page, final int limit) throws CobinException {
 
         final Call<CobinResponse<List<Ledger>>> call = walletAPI.getLedgerEntries(apiJWT, page, limit);
@@ -356,6 +526,12 @@ public class CobinhoodClient {
         return ledgers;
     }
 
+    /**
+     * Get wallet deposit addresses.
+     *
+     * @return  list of addresses
+     * @throws CobinException
+     */
     public synchronized List<Address> getDepositAddresses() throws CobinException {
 
         final Call<CobinResponse<List<Address>>> call = walletAPI.getDepositAddresses(apiJWT);
@@ -367,6 +543,12 @@ public class CobinhoodClient {
         return addresses;
     }
 
+    /**
+     * Get wallet withdrawal addresses.
+     *
+     * @return  list of addresses
+     * @throws CobinException
+     */
     public synchronized List<Address> getWithdrawalAddresses() throws CobinException {
 
         final Call<CobinResponse<List<Address>>> call = walletAPI.getWithdrawalAddresses(apiJWT);
@@ -378,6 +560,13 @@ public class CobinhoodClient {
         return addresses;
     }
 
+    /**
+     * Get withdrawal information.
+     *
+     * @param withdrawalId  withdrawal id
+     * @return              withdrawal
+     * @throws CobinException
+     */
     public synchronized Withdrawal getWithdrawal(final String withdrawalId) throws CobinException {
 
         final Call<CobinResponse<Withdrawal>> call = walletAPI.getWithdrawal(apiJWT, withdrawalId);
@@ -389,6 +578,12 @@ public class CobinhoodClient {
         return withdrawal;
     }
 
+    /**
+     * Get all withdrawals.
+     *
+     * @return  list of withdrawals
+     * @throws CobinException
+     */
     public synchronized List<Withdrawal> getWithdrawals() throws CobinException {
 
         final Call<CobinResponse<List<Withdrawal>>> call = walletAPI.getWithdrawals(apiJWT, null, null);
@@ -400,6 +595,14 @@ public class CobinhoodClient {
         return withdrawals;
     }
 
+    /**
+     * Get all withdrawals with pagination.
+     *
+     * @param page  page
+     * @param limit limit
+     * @return      list of withdrawals
+     * @throws CobinException
+     */
     public synchronized List<Withdrawal> getWithdrawals(final int page, final int limit) throws CobinException {
 
         final Call<CobinResponse<List<Withdrawal>>> call = walletAPI.getWithdrawals(apiJWT, page, limit);
@@ -411,6 +614,13 @@ public class CobinhoodClient {
         return withdrawals;
     }
 
+    /**
+     * Get deposit information.
+     *
+     * @param depositId deposit id
+     * @return          deposit
+     * @throws CobinException
+     */
     public synchronized Deposit getDeposit(final String depositId) throws CobinException {
 
         final Call<CobinResponse<Deposit>> call = walletAPI.getDeposit(apiJWT, depositId);
@@ -422,6 +632,12 @@ public class CobinhoodClient {
         return deposit;
     }
 
+    /**
+     * Get all deposits.
+     *
+     * @return  list of deposits
+     * @throws CobinException
+     */
     public synchronized List<Deposit> getDeposits() throws CobinException {
 
         final Call<CobinResponse<List<Deposit>>> call = walletAPI.getDeposits(apiJWT, null, null);
@@ -433,6 +649,14 @@ public class CobinhoodClient {
         return deposits;
     }
 
+    /**
+     * Get all deposits with pagination.
+     *
+     * @param page  page
+     * @param limit limit
+     * @return      list of deposits
+     * @throws CobinException
+     */
     public synchronized List<Deposit> getDeposits(final int page, final int limit) throws CobinException {
 
         final Call<CobinResponse<List<Deposit>>> call = walletAPI.getDeposits(apiJWT, page, limit);
