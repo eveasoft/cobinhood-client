@@ -7,10 +7,7 @@ import com.eveasoft.cobinhood.api.CobinhoodWalletAPI;
 import com.eveasoft.cobinhood.exception.CobinException;
 import com.eveasoft.cobinhood.model.*;
 import com.eveasoft.cobinhood.model.chart.Candle;
-import com.eveasoft.cobinhood.model.market.Currency;
-import com.eveasoft.cobinhood.model.market.OrderBook;
-import com.eveasoft.cobinhood.model.market.Ticker;
-import com.eveasoft.cobinhood.model.market.TradingPair;
+import com.eveasoft.cobinhood.model.market.*;
 import com.eveasoft.cobinhood.model.trading.Order;
 import com.eveasoft.cobinhood.model.trading.Trade;
 import com.eveasoft.cobinhood.model.wallet.*;
@@ -218,7 +215,7 @@ public class CobinhoodClient {
     }
 
     /**
-     * Gets spread for the specified trading pair.
+     * Get spread for the specified trading pair.
      *
      * @param tradingPairId trading pair id
      * @return              spread
@@ -235,6 +232,30 @@ public class CobinhoodClient {
         final float spread = (lowestAsk > highestBid) ? lowestAsk - highestBid : 0f;
 
         return spread;
+    }
+
+    /**
+     * Get market depth for the specified trading pair.
+     *
+     * @param tradingPairId trading pair id
+     * @return              depth
+     * @throws CobinException
+     */
+    public synchronized Depth getDepth(final String tradingPairId) throws CobinException {
+
+        final OrderBook orderBook = getOrderBook(tradingPairId, 1);
+
+        final float highestBid = Float.valueOf(orderBook.getBids().get(0).get(0));
+
+        final float lowestAsk = Float.valueOf(orderBook.getAsks().get(0).get(0));
+
+        final float spread = (lowestAsk > highestBid) ? lowestAsk - highestBid : 0f;
+
+        final float midPrice = (lowestAsk + highestBid) / 2;
+
+        final Depth depth = new Depth(spread, highestBid, lowestAsk, midPrice);
+
+        return depth;
     }
 
 

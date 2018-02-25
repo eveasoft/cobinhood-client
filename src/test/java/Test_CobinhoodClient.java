@@ -1,9 +1,6 @@
 import com.eveasoft.cobinhood.CobinhoodClient;
 import com.eveasoft.cobinhood.model.chart.Candle;
-import com.eveasoft.cobinhood.model.market.Currency;
-import com.eveasoft.cobinhood.model.market.OrderBook;
-import com.eveasoft.cobinhood.model.market.Ticker;
-import com.eveasoft.cobinhood.model.market.TradingPair;
+import com.eveasoft.cobinhood.model.market.*;
 import com.eveasoft.cobinhood.model.trading.Order;
 import com.eveasoft.cobinhood.model.trading.Trade;
 import com.eveasoft.cobinhood.model.wallet.*;
@@ -50,6 +47,13 @@ public class Test_CobinhoodClient {
     public void testGetOrderBook() {
 
         final OrderBook orderBook = cobinhoodClient.getOrderBook("ETH-BTC", 2);
+
+        System.out.println(orderBook.getAsks().get(0).get(0));
+        System.out.println(orderBook.getAsks().get(0).get(1));
+        System.out.println(orderBook.getAsks().get(0).get(2));
+        System.out.println(orderBook.getBids().get(0).get(0));
+        System.out.println(orderBook.getBids().get(0).get(1));
+        System.out.println(orderBook.getBids().get(0).get(2));
     }
 
     @Test
@@ -70,6 +74,16 @@ public class Test_CobinhoodClient {
         final float spread = cobinhoodClient.getSpread("ETH-BTC");
     }
 
+    @Test
+    public void testGetDepth() {
+
+        final Depth depth = cobinhoodClient.getDepth("ETH-BTC");
+
+        System.out.println(String.format("Highest bid: %f", depth.getHighestBid()));
+        System.out.println(String.format("Lowest ask: %f", depth.getLowestAsk()));
+        System.out.println(String.format("Spread: %f", depth.getSpread()));
+        System.out.println(String.format("Mid price: %f", depth.getMidPrice()));
+    }
 
     @Test
     public void testGetCandles() {
