@@ -22,9 +22,20 @@ public static void main(String[] args) throws CobinException {
 
     final CobinhoodClient cobinhoodClient = CobinhoodClient.getInstance(conf);
 
+    // Get ticker for a specified trading pair:
+
     final Ticker ticker = cobinhoodClient.getTicker("ETH-BTC");
 
     System.out.println(String.format("Last trade price of ETH-BTC pair: %s", ticker.getLastTradePrice()));
+    
+    // Get market depth for a specified trading pair:
+    
+    final Depth depth = cobinhoodClient.getDepth("ETH-BTC");
+    
+    System.out.println(String.format("Highest bid: %f", depth.getHighestBid()));
+    System.out.println(String.format("Lowest ask: %f", depth.getLowestAsk()));
+    System.out.println(String.format("Spread: %f", depth.getSpread()));
+    System.out.println(String.format("Mid price: %f", depth.getMidPrice()));
 }
 ```
 Note: API token (api.jwt) is only necessary when requesting the private API (trading and wallet related operations)
