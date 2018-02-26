@@ -11,6 +11,8 @@ import com.eveasoft.cobinhood.model.market.*;
 import com.eveasoft.cobinhood.model.trading.Order;
 import com.eveasoft.cobinhood.model.trading.Trade;
 import com.eveasoft.cobinhood.model.wallet.*;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
@@ -51,14 +53,22 @@ public class CobinhoodClient {
         return sInstance;
     }
 
-    private CobinhoodClient(Map<String, String> conf) {
+    private CobinhoodClient(final Map<String, String> conf) {
 
         baseUrl = conf.get("base.url");
         apiJWT = conf.get("api.jwt");
 
+        final HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BASIC);
+
+        final OkHttpClient client = new OkHttpClient.Builder()
+                .addInterceptor(logging)
+                .build();
+
         retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
                 .baseUrl(baseUrl)
+                .client(client)
                 .build();
 
         marketAPI = retrofit.create(CobinhoodMarketAPI.class);
@@ -67,7 +77,7 @@ public class CobinhoodClient {
         walletAPI = retrofit.create(CobinhoodWalletAPI.class);
     }
 
-    private synchronized Response<CobinResponse> execute(Call call) throws CobinException {
+    private synchronized Response<CobinResponse> execute(final Call call) throws CobinException {
 
         try {
             final Response<CobinResponse> resp = call.execute();
@@ -688,5 +698,4 @@ public class CobinhoodClient {
 
         return deposits;
     }
-
 }

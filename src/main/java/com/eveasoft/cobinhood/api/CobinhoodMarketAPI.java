@@ -33,18 +33,25 @@ public interface CobinhoodMarketAPI {
     // Get order book for the trading pair containing all asks/bids:
 
     @GET("/v1/market/orderbooks/{trading_pair_id}")
-    Call<CobinResponse<OrderBook>> getOrderBook(@Path("trading_pair_id") String tradingPairId, @Query("limit") Integer limit);
+    Call<CobinResponse<OrderBook>> getOrderBook(
+            @Path("trading_pair_id") String tradingPairId,
+            @Query("limit") Integer limit
+    );
 
 
     // Returns ticker for specified trading pair:
 
     @GET("/v1/market/tickers/{trading_pair_id}")
-    Call<CobinResponse<Ticker>> getTicker(@Path("trading_pair_id") String tradingPairId);
+    Call<CobinResponse<Ticker>> getTicker(
+            @Path("trading_pair_id") String tradingPairId
+    );
 
 
     // Returns most recent trades for the specified trading pair:
 
     @GET("/v1/market/trades/{trading_pair_id}")
-    Call<CobinResponse<List<Trade>>> getRecentTrades(@Path("trading_pair_id") String tradingPairId, @Query("limit") Integer limit);
-
+    Call<CobinResponse<List<Trade>>> getRecentTrades(
+            @Path("trading_pair_id") String tradingPairId,
+            @Query("limit") Integer limit
+    );
 }

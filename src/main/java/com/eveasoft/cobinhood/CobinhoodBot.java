@@ -28,5 +28,4 @@ public class CobinhoodBot {
 
         System.out.println(ticker.getLastTradePrice());
     }
-
 }

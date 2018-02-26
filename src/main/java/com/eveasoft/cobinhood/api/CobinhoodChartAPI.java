@@ -16,5 +16,7 @@ public interface CobinhoodChartAPI {
     // Get charting candles:
 
     @GET("/v1/chart/candles/{trading_pair_id}")
-    Call<CobinResponse<List<Candle>>> getCandles(@Path("trading_pair_id") String tradingPairId);
+    Call<CobinResponse<List<Candle>>> getCandles(
+            @Path("trading_pair_id") String tradingPairId
+    );
 }
