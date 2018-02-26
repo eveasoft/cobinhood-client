@@ -41,7 +41,7 @@ public class CobinhoodClient {
     private final CobinhoodTradingAPI tradingAPI;
     private final CobinhoodWalletAPI walletAPI;
 
-    public static CobinhoodClient getInstance(Map<String, String> conf) {
+    public static CobinhoodClient getInstance(final Map<String, String> conf) {
 
         if (sInstance == null) {
             synchronized (CobinhoodClient.class) {
@@ -59,7 +59,7 @@ public class CobinhoodClient {
         apiJWT = conf.get("api.jwt");
 
         final HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-        logging.setLevel(HttpLoggingInterceptor.Level.BASIC);
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
 
         final OkHttpClient client = new OkHttpClient.Builder()
                 .addInterceptor(logging)
